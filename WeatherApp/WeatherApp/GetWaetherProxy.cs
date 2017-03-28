@@ -16,8 +16,11 @@ namespace WeatherApp
         public async static Task<RootObject> getWeather(double lat, double lon)
         {
             var http = new HttpClient();
+
+            var url = String.Format("http://api.openweathermap.org/data/2.5/weather?lat={0}&lon={1}&units=metric&appid=8805913b8c73f7ed5c7e280f72d09f6b", lat, lon);
+
             //Use await because I'm waiting for a result - Method signature must be async also
-            var response = await http.GetAsync("http://api.openweathermap.org/data/2.5/weather?lat=53.27&lon=-9.05&units=metric&appid=8805913b8c73f7ed5c7e280f72d09f6b");
+            var response = await http.GetAsync(url);
             //Result from request in string format
             var result = await response.Content.ReadAsStringAsync();
 
