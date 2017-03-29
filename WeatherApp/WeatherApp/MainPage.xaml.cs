@@ -29,7 +29,8 @@ namespace WeatherApp
             this.InitializeComponent();
         }
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
+        //Page loaded event called on start-up
+        private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -54,13 +55,24 @@ namespace WeatherApp
                 string _weatherIcon = String.Format("http://openweathermap.org/img/w/{0}.png", _weather.weather[0].icon);
                 _resultImage.Source = new BitmapImage(new Uri(_weatherIcon, UriKind.Absolute));
 
-                //Get Location Name, temperature and description
-                _resultTxt.Text = _weather.name + " -- " + ((int)_weather.main.temp).ToString() + "°" + " - " + _weather.weather[0].description;
+                //Get Location Name, temperature and description       
+                _tempTxt.Text = ((int)_weather.main.temp).ToString() + "°";
+                _descriptionTxt.Text = _weather.weather[0].description;
+                _locationTxt.Text = _weather.name;                   
+
             }
             catch
             {
-                _errorTextBlock.Text = "Oops - Unable to get weather at this time.";
+                _locationTxt.Text = "Oops - Unable to get weather at this time.";
+                _errorButon.Visibility = Visibility.Visible;
             }
+        }
+
+        private void _errorButon_Click(object sender, RoutedEventArgs e)
+        {
+            //when retry button is clicked the Page_Loaded event is called again to retry
+            Page_Loaded(sender, e);
+            _errorButon.Visibility = Visibility.Collapsed;              
         }
     }
 }
