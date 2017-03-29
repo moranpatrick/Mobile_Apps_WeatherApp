@@ -7,11 +7,11 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
-namespace WeatherApp
+namespace WeatherTileUpdate.Models
 {
-    /*This class is resonsible for retrieving json data from a httprequest and converting that data into an object graph*/
-    class GetWaetherProxy
+    public class GetWeatherProxy
     {
         #region Get The Weather
         //Return object must be a Task - A promise to return a task of type rootobject
@@ -140,4 +140,5 @@ namespace WeatherApp
         public int cod { get; set; }
     }
     #endregion
+
 }
