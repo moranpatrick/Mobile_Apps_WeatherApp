@@ -6,15 +6,25 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" Loaded="Page_Loaded">
-    
-    <StackPanel Background="DarkSeaGreen">
-        <StackPanel  VerticalAlignment="Center">
-            <Image Name="_resultImage" Width="300" Height="300" HorizontalAlignment="Center"/>
-            <TextBlock Name="_tempTxt" FontSize="60" Foreground="White" HorizontalAlignment="Center"/>
-            <TextBlock Name="_descriptionTxt" FontSize="30" Foreground="White" HorizontalAlignment="Center"/>
-            <TextBlock Name="_locationTxt" FontSize="20" Foreground="CornflowerBlue"
-                            HorizontalAlignment="Center" TextWrapping="Wrap"/>
-            <Button HorizontalAlignment="Center" Margin="5" Visibility="Collapsed" Content="Retry" BorderBrush="Red" Name="_errorButon" Click="_errorButon_Click"></Button>
+
+    <StackPanel Background="DodgerBlue">
+
+        <StackPanel x:Name="_weatherPanel" VerticalAlignment="Center">
+            
+            <Image x:Name="_resultImage" Width="300" Height="300"  HorizontalAlignment="Center"/>
+
+            <TextBlock x:Name="_tempTxt" FontSize="60" FontFamily="Comic Sans MS" Foreground="White" HorizontalAlignment="Center"/>
+            <TextBlock x:Name="_descriptionTxt" FontSize="30" FontFamily="Comic Sans MS"  Foreground="White" HorizontalAlignment="Center"/>
+            <TextBlock x:Name="_locationTxt" FontSize="20" FontFamily="Comic Sans MS"  Foreground="White" HorizontalAlignment="Center" TextWrapping="Wrap"/>
+            <ProgressRing Name="_progressRing" IsActive="True" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Button HorizontalAlignment="Center" Margin="5" Visibility="Collapsed" Content="Retry" BorderBrush="Red" x:Name="_errorButon" Click="_errorButon_Click"/>
+        </StackPanel>
+        <StackPanel>
+            <TextBox x:Name="_LogMessage" AcceptsReturn="True" FontFamily="Comic Sans MS"  TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" Visibility="Collapsed" PlaceholderText="Optional Log Message" HorizontalAlignment="Center"></TextBox>
+            <Button x:Name="_logBtn" Visibility="Collapsed" Content="Log Weather" HorizontalAlignment="Center" Click="_logBtn_Click"></Button>
+            <Button x:Name="_deleteLogBtn" Visibility="Collapsed" Content="Delete Log File" HorizontalAlignment="Center" Click="_deleteLogBtn_Click"></Button>
+            
+            <TextBox Width="200" MaxHeight="300" x:Name="_displayLog" FontFamily="Comic Sans MS"  TextWrapping="Wrap" Visibility="Collapsed" Header="Log Diary" ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnly="True"></TextBox>
         </StackPanel>
     </StackPanel>
 </Page>

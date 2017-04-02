@@ -15,7 +15,7 @@ namespace WeatherApp
             var access = await Geolocator.RequestAccessAsync();
 
             if (access != GeolocationAccessStatus.Allowed)
-            {
+            {       
                 throw new Exception();
             }
 
