@@ -16,15 +16,19 @@
             <TextBlock x:Name="_tempTxt" FontSize="60" FontFamily="Comic Sans MS" Foreground="White" HorizontalAlignment="Center"/>
             <TextBlock x:Name="_descriptionTxt" FontSize="30" FontFamily="Comic Sans MS"  Foreground="White" HorizontalAlignment="Center"/>
             <TextBlock x:Name="_locationTxt" FontSize="20" FontFamily="Comic Sans MS"  Foreground="White" HorizontalAlignment="Center" TextWrapping="Wrap"/>
-            <ProgressRing Name="_progressRing" IsActive="True" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-            <Button HorizontalAlignment="Center" Margin="5" Visibility="Collapsed" Content="Retry" BorderBrush="Red" x:Name="_errorButon" Click="_errorButon_Click"/>
+            <Button x:Name="_refresh" Margin="3" Visibility="Collapsed" HorizontalAlignment="Center" BorderBrush="White" Click="_refresh_Click" Content="Refresh"></Button>
+            <Button HorizontalAlignment="Center" Visibility="Collapsed" Content="Retry" BorderBrush="Red" x:Name="_errorButon" Click="_errorButon_Click"/>
+        
         </StackPanel>
+        <ProgressRing Name="_progressRing" IsActive="True" HorizontalAlignment="Center" VerticalAlignment="Center"/>
         <StackPanel>
-            <TextBox x:Name="_LogMessage" AcceptsReturn="True" FontFamily="Comic Sans MS"  TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" Visibility="Collapsed" PlaceholderText="Optional Log Message" HorizontalAlignment="Center"></TextBox>
-            <Button x:Name="_logBtn" Visibility="Collapsed" Content="Log Weather" HorizontalAlignment="Center" Click="_logBtn_Click"></Button>
-            <Button x:Name="_deleteLogBtn" Visibility="Collapsed" Content="Delete Log File" HorizontalAlignment="Center" Click="_deleteLogBtn_Click"></Button>
-            
-            <TextBox Width="200" MaxHeight="300" x:Name="_displayLog" FontFamily="Comic Sans MS"  TextWrapping="Wrap" Visibility="Collapsed" Header="Log Diary" ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnly="True"></TextBox>
+            <TextBox x:Name="_LogMessage" AcceptsReturn="True" MaxHeight="75" MaxWidth="200" FontFamily="Comic Sans MS"  TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" Visibility="Collapsed" PlaceholderText="Optional Log Message" HorizontalAlignment="Center"></TextBox>
+            <Button x:Name="_logBtn" Visibility="Collapsed" BorderBrush="Firebrick" Margin="5" Content="Log Weather" HorizontalAlignment="Center" Click="_logBtn_Click"></Button>
+            <Button x:Name="_showLog" Visibility="Collapsed" BorderBrush="Firebrick" Content="Show Log" Margin="5" HorizontalAlignment="Center" Click="_showLog_Click"></Button>
+            <Button x:Name="_deleteLogBtn" Margin="5" BorderBrush="Firebrick" Visibility="Collapsed" Content="Delete Log" HorizontalAlignment="Center" Click="_deleteLogBtn_Click"></Button>
+            <TextBox Width="350" MaxHeight="300" x:Name="_displayLog" FontFamily="Comic Sans MS"  TextWrapping="Wrap" Visibility="Collapsed" Header="Log Diary" ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnly="True"></TextBox>
+            <Button x:Name="_home" Content="Home" Margin="5" BorderBrush="Firebrick" HorizontalAlignment="Center" Visibility="Collapsed" Click="_home_Click"></Button>
         </StackPanel>
     </StackPanel>
+    
 </Page>

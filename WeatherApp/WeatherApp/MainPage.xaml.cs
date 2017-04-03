@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
+using Windows.UI.Core;
 using Windows.UI.Notifications;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
@@ -37,7 +38,6 @@ namespace WeatherApp
         //Page loaded event called on start-up
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
-
             try
             {
                 var position = await LocationManager.GetPosition();
@@ -46,18 +46,19 @@ namespace WeatherApp
                 var lon = position.Coordinate.Longitude;
 
                 //Call the getWeather() in GetWeatherProxy
-                RootObject _weather = await GetWaetherProxy.getWeather(lat, lon);
+                RootObject _weather = await GetWeatherProxy.getWeather(lat, lon);
 
                 //Schedule Tile Update from web app on azure passing in current longitude and latitude
                 var uri = string.Format("http://weathertileupdate.azurewebsites.net/?lat={0}&lon={1}", lat, lon);
 
                 var tileContent = new Uri(uri);
+                //Update The Start menu tile every six hours
                 var requestedInterval = PeriodicUpdateRecurrence.SixHours;
 
                 var updater = TileUpdateManager.CreateTileUpdaterForApplication();
                 updater.StartPeriodicUpdate(tileContent, requestedInterval);
 
-                //Create a url with the icon from the json
+                //Create a path with the icon from the json
                 string _weatherIcon = String.Format("ms-appx:///Assets/weather/{0}.png", _weather.weather[0].icon);
                 _resultImage.Source = new BitmapImage(new Uri(_weatherIcon, UriKind.Absolute));
 
@@ -67,10 +68,12 @@ namespace WeatherApp
                 _locationTxt.Text = _weather.name;
 
                 //Turn off progess ring, make log input and buttons visible
+                _refresh.Visibility = Visibility.Visible;
                 _progressRing.IsActive = false;
                 _LogMessage.Visibility = Visibility.Visible;
                 _logBtn.Visibility = Visibility.Visible;
                 _deleteLogBtn.Visibility = Visibility.Visible;
+                _showLog.Visibility = Visibility.Visible;
             }
             catch
             {
@@ -98,8 +101,10 @@ namespace WeatherApp
             _logBtn.Visibility = Visibility.Collapsed;
             _weatherPanel.Visibility = Visibility.Collapsed;
             _deleteLogBtn.Visibility = Visibility.Collapsed;
+            _showLog.Visibility = Visibility.Collapsed;
             _progressRing.IsActive = true;
             _displayLog.Visibility = Visibility.Visible;
+            _home.Visibility = Visibility.Visible;
 
             var date = DateTime.Now.ToString("dd/m/yy h:mm:ss");
 
@@ -112,19 +117,19 @@ namespace WeatherApp
                 var logData = "";
 
                 //Call the getWeather() in GetWeatherProxy
-                RootObject _weather = await GetWaetherProxy.getWeather(lat, lon);
+                RootObject _weather = await GetWeatherProxy.getWeather(lat, lon);
 
                 //If log no log message is entered
                 if (string.IsNullOrEmpty(_LogMessage.Text))
                 {
-                    logData = "Temperature: " + ((int)_weather.main.temp).ToString() + "°" + "\nLocation: " + _weather.name + "\nDate: " + date;
+                    logData = "Temperature: " + ((int)_weather.main.temp).ToString() + "°" + "\nLocation: " + _weather.name + "\nDate: " + date + "\n=======================\n";
                 }
                 else
                 {
-                    logData = "Temperature: " + ((int)_weather.main.temp).ToString() + "°" + "\nLocation: " + _weather.name + "\nDate: " + date + "\nLog Message: " + _LogMessage.Text;
+                    logData = "Temperature: " + ((int)_weather.main.temp).ToString() + "°" + "\nLocation: " + _weather.name + "\nDate: " + date + "\nLog Message: " + _LogMessage.Text + "\n=======================\n";
                 }
-                
-                //Create dataFile.txt in LocalFolder and write “My text” to it 
+
+                /*https://blogs.windows.com/buildingapps/2016/05/10/getting-started-storing-app-data-locally/#bMwMep36lwQ3xqDD.97*/
                 var dataFolder = ApplicationData.Current.LocalFolder;
                 var newFolder = await dataFolder.CreateFolderAsync("LogFolder", CreationCollisionOption.OpenIfExists);
 
@@ -169,25 +174,52 @@ namespace WeatherApp
 
         private async void _deleteLogBtn_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                
-                var localFolder = ApplicationData.Current.LocalFolder;
-                var thefiles = await localFolder.GetFilesAsync();
+            var dataFolder = ApplicationData.Current.LocalFolder;
+            var newFolder = await dataFolder.CreateFolderAsync("LogFolder", CreationCollisionOption.OpenIfExists);
 
-                for (int i = 1; i < thefiles.Count; i++)
-                {
-                    await thefiles[i].DeleteAsync(StorageDeleteOption.Default);
-                    
-                }
-                _locationTxt.Text = "Sucessfully Deleted Log File";
-            }
-            catch
-            {
-                _locationTxt.Text = "Can't find File";
-            }
+            var logFile = await newFolder.CreateFileAsync("log.txt", CreationCollisionOption.OpenIfExists);
 
+            //Write to the file overwriting the data on it
+            await FileIO.WriteTextAsync(logFile, "");
+            _locationTxt.Text = "Deleted The Log File!";
 
+        }
+
+        private void _showLog_Click(object sender, RoutedEventArgs e)
+        {
+            //Display The Weather log
+            _LogMessage.Visibility = Visibility.Collapsed;
+            _logBtn.Visibility = Visibility.Collapsed;
+            _weatherPanel.Visibility = Visibility.Collapsed;
+            _deleteLogBtn.Visibility = Visibility.Collapsed;
+            _showLog.Visibility = Visibility.Collapsed;
+
+            _home.Visibility = Visibility.Visible;
+            _displayLog.Visibility = Visibility.Visible;
+            readLogFile();
+        }
+
+        private void _home_Click(object sender, RoutedEventArgs e)
+        {
+            _home.Visibility = Visibility.Collapsed;
+            _displayLog.Visibility = Visibility.Collapsed;
+
+            _weatherPanel.Visibility = Visibility.Visible;
+            _showLog.Visibility = Visibility.Visible;
+            _logBtn.Visibility = Visibility.Visible;
+            _LogMessage.Visibility = Visibility.Visible;
+            _deleteLogBtn.Visibility = Visibility.Visible;
+            //Clear TextBox
+            _LogMessage.Text = "";
+        }
+
+        private void _refresh_Click(object sender, RoutedEventArgs e)
+        {
+            _refresh.Visibility = Visibility.Collapsed;
+            _progressRing.IsActive = true;
+            _LogMessage.Text = "";
+            //Reload Page_Loaded Event
+            Page_Loaded(sender, e);
         }
     }
 }

@@ -95,7 +95,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GetWaetherProxy.cs" />
+    <Compile Include="GetWeatherProxy.cs" />
     <Compile Include="LocationManager.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -109,6 +109,8 @@
     <None Include="WeatherApp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Square150x150Logo.scale-100.png" />
+    <Content Include="Assets\Square150x150Logo.scale-400.png" />
     <Content Include="Assets\weather\01d.png" />
     <Content Include="Assets\weather\01n.png" />
     <Content Include="Assets\weather\02d.png" />

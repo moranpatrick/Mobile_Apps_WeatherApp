@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace WeatherApp
 {
     /*This class is resonsible for retrieving json data from a httprequest and converting that data into an object graph*/
-    class GetWaetherProxy
+    class GetWeatherProxy
     {
         #region Get The Weather
         //Return object must be a Task - A promise to return a task of type rootobject

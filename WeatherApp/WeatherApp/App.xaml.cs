@@ -7,6 +7,7 @@ using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -40,6 +41,7 @@ namespace WeatherApp
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
+            
 
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
@@ -50,6 +52,7 @@ namespace WeatherApp
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
 
+
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
                     //TODO: Load state from previously suspended application
@@ -57,6 +60,7 @@ namespace WeatherApp
 
                 // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
+              
             }
 
             if (e.PrelaunchActivated == false)
@@ -96,5 +100,6 @@ namespace WeatherApp
             //TODO: Save application state and stop any background activity
             deferral.Complete();
         }
+
     }
 }
