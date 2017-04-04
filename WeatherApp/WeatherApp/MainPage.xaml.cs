@@ -72,7 +72,6 @@ namespace WeatherApp
                 _progressRing.IsActive = false;
                 _LogMessage.Visibility = Visibility.Visible;
                 _logBtn.Visibility = Visibility.Visible;
-                _deleteLogBtn.Visibility = Visibility.Visible;
                 _showLog.Visibility = Visibility.Visible;
             }
             catch
@@ -81,6 +80,7 @@ namespace WeatherApp
                 _locationTxt.Text = "Oops - Unable to get weather at this time.";
                 _errorButon.Visibility = Visibility.Visible;
                 _progressRing.IsActive = false;
+                _refresh.Visibility = Visibility.Collapsed;
             }
 
         }
@@ -105,6 +105,7 @@ namespace WeatherApp
             _progressRing.IsActive = true;
             _displayLog.Visibility = Visibility.Visible;
             _home.Visibility = Visibility.Visible;
+            _deleteLogBtn.Visibility = Visibility.Visible;
 
             var date = DateTime.Now.ToString("dd/m/yy h:mm:ss");
 
@@ -144,12 +145,22 @@ namespace WeatherApp
                 {
                     await FileIO.AppendTextAsync(logFile, logData);
                 }
-                readLogFile();
 
+                /*Only read file if it exists - Catch file exception*/
+                var fileExists = await isFilePresent("LogFolder");
+                if (fileExists == true)
+                {
+                    readLogFile();
+                }
+          
             }
             catch
             {
-                Page_Loaded(sender, e);
+
+                _locationTxt.Text = "Error Logging File!";
+                //Page_Loaded(sender, e);
+                _home_Click(sender, e);
+                _progressRing.IsActive = false;
             }
              
         }
@@ -165,7 +176,7 @@ namespace WeatherApp
             _progressRing.IsActive = false;
             _displayLog.Text = textContent + "\n";
         }
-
+        /*http://stackoverflow.com/questions/8626018/how-to-check-if-file-exists-in-a-windows-store-app*/
         private async Task<bool> isFilePresent(string fileName)
         {
             var item = await ApplicationData.Current.LocalFolder.TryGetItemAsync(fileName);
@@ -181,11 +192,11 @@ namespace WeatherApp
 
             //Write to the file overwriting the data on it
             await FileIO.WriteTextAsync(logFile, "");
-            _locationTxt.Text = "Deleted The Log File!";
+            _showLog_Click(sender, e);
 
         }
 
-        private void _showLog_Click(object sender, RoutedEventArgs e)
+        private async void _showLog_Click(object sender, RoutedEventArgs e)
         {
             //Display The Weather log
             _LogMessage.Visibility = Visibility.Collapsed;
@@ -194,9 +205,15 @@ namespace WeatherApp
             _deleteLogBtn.Visibility = Visibility.Collapsed;
             _showLog.Visibility = Visibility.Collapsed;
 
+            _deleteLogBtn.Visibility = Visibility.Visible;
             _home.Visibility = Visibility.Visible;
             _displayLog.Visibility = Visibility.Visible;
-            readLogFile();
+            /*Only read file if it exists - Catch file exception*/
+        var fileExists = await isFilePresent("LogFolder");
+            if (fileExists == true)
+            {
+                readLogFile();
+            }
         }
 
         private void _home_Click(object sender, RoutedEventArgs e)
@@ -208,7 +225,7 @@ namespace WeatherApp
             _showLog.Visibility = Visibility.Visible;
             _logBtn.Visibility = Visibility.Visible;
             _LogMessage.Visibility = Visibility.Visible;
-            _deleteLogBtn.Visibility = Visibility.Visible;
+            _deleteLogBtn.Visibility = Visibility.Collapsed;
             //Clear TextBox
             _LogMessage.Text = "";
         }
@@ -217,6 +234,7 @@ namespace WeatherApp
         {
             _refresh.Visibility = Visibility.Collapsed;
             _progressRing.IsActive = true;
+            //Clear Input Box
             _LogMessage.Text = "";
             //Reload Page_Loaded Event
             Page_Loaded(sender, e);

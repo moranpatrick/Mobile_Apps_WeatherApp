@@ -4,7 +4,7 @@
   <mp:PhoneIdentity PhoneProductId="3f63f8e8-204a-4112-93c8-afe9a9161a6b" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>WeatherApp</DisplayName>
-    <PublisherDisplayName>Patrick</PublisherDisplayName>
+    <PublisherDisplayName>Patrick Moran</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>
@@ -20,6 +20,7 @@
           <uap:TileUpdate Recurrence="sixHours" UriTemplate="http://weathertileupdate.azurewebsites.net/" />
           <uap:ShowNameOnTiles>
             <uap:ShowOn Tile="square150x150Logo" />
+            <uap:ShowOn Tile="wide310x150Logo" />
           </uap:ShowNameOnTiles>
         </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />

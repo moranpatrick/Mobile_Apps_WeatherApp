@@ -109,8 +109,6 @@
     <None Include="WeatherApp_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Square150x150Logo.scale-100.png" />
-    <Content Include="Assets\Square150x150Logo.scale-400.png" />
     <Content Include="Assets\weather\01d.png" />
     <Content Include="Assets\weather\01n.png" />
     <Content Include="Assets\weather\02d.png" />
