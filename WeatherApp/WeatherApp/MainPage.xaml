@@ -10,8 +10,8 @@
     <StackPanel Background="DodgerBlue">
 
         <StackPanel x:Name="_weatherPanel" VerticalAlignment="Center">
-            
-            <Image x:Name="_resultImage" Width="300" Height="300"  HorizontalAlignment="Center"/>
+
+            <Image x:Name="_resultImage" Width="150" Height="150"  HorizontalAlignment="Center"/>
 
             <TextBlock x:Name="_tempTxt" FontSize="60" FontFamily="Comic Sans MS" Foreground="White" HorizontalAlignment="Center"/>
             <TextBlock x:Name="_descriptionTxt" FontSize="30" FontFamily="Comic Sans MS"  Foreground="White" HorizontalAlignment="Center"/>
@@ -29,14 +29,17 @@
                 <Button x:Name="_showLog" Visibility="Collapsed" BorderBrush="Firebrick" Content="Show Log" Margin="5" HorizontalAlignment="Center" Click="_showLog_Click"></Button>
             </StackPanel>
         </StackPanel>
-        
+
         <StackPanel x:Name="_logPage">
-            <TextBox Width="350" MaxHeight="300" x:Name="_displayLog" HorizontalAlignment="Center" FontFamily="Comic Sans MS"  Header="Log Diary" TextAlignment="Center" TextWrapping="Wrap" Visibility="Collapsed" ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnly="True"></TextBox>
+            <TextBox Width="220" MaxHeight="300" x:Name="_displayLog" FontFamily="Comic Sans MS" TextAlignment="Center" TextWrapping="Wrap" Visibility="Collapsed" ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnly="True">
+                <TextBox.Header>
+                    <TextBlock  Text="Log Diary" TextAlignment="Center" Foreground="red" FontFamily="Comic Sans MS" FontWeight="Bold"></TextBlock>
+                </TextBox.Header>
+            </TextBox>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button x:Name="_deleteLogBtn"  Margin="3" BorderBrush="Firebrick"  Visibility="Collapsed" Content="Delete Log" HorizontalAlignment="Center" Click="_deleteLogBtn_Click"></Button>
                 <Button x:Name="_home" Content="Home" Margin="3" BorderBrush="Firebrick"  HorizontalAlignment="Center" Visibility="Collapsed" Click="_home_Click"></Button>
             </StackPanel>
         </StackPanel>
     </StackPanel>
-    
 </Page>
