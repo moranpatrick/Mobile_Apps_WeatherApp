@@ -1,4 +1,6 @@
-﻿<tile>
+﻿<!--Tile Template From https://msdn.microsoft.com/en-us/library/windows/apps/hh761491.aspx#TileSquareText01 -->
+<tile>
+    <!--Pass Data from view to the controller using a viewbag -->
     <visual version="2">
         <binding template="TileSquare150x150Text01" fallback="TileSquareText01">
             <text id="1">@ViewBag.Temp</text>

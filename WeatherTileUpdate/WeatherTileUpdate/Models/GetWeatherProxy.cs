@@ -13,6 +13,7 @@ namespace WeatherTileUpdate.Models
 {
     public class GetWeatherProxy
     {
+        /*Exact same class as in the actual weather app to retrive the weather from the api */
         #region Get The Weather
         //Return object must be a Task - A promise to return a task of type rootobject
         public async static Task<RootObject> getWeather(double lat, double lon)

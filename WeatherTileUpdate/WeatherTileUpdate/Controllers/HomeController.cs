@@ -9,6 +9,7 @@ namespace WeatherTileUpdate.Controllers
 {
     public class HomeController : Controller
     {
+        //One view for this controller called index.cshtml
         // GET: Home
         public async Task<ActionResult> Index(string lat, string lon)
         {

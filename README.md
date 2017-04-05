@@ -1,6 +1,6 @@
 # Software Development Year 3 - (UWP) Mobile Apps Project
 
-## Contents
+## [Contents](#contents)
 [Project Overview](#overview)  
 [Architecture](#architecture)   
 [Sensor Used](#Sensor)  
@@ -16,32 +16,35 @@ Project Instructions:
 and at least one other sensor or service available on the devices.   
 
 
-<p>For this project I decided to make a weather application which uses the devices GPS to get your location. The gps coordinates are passed through a HTTP request to a [weather API](http://openweathermap.org/) and the current weather for that location is displayed to the user.</p>
-<p>The user can also save the current weather along with the date, time and an optional message (Like a weather diary).</p>
+For this project I decided to make a weather application which uses the devices GPS to get your location. The gps coordinates are passed through a HTTP request to a [weather API](http://openweathermap.org/) and the current weather for that location is displayed to the user.</p>
+<p>The user can also save the current weather along with the date, time and an optional message (Like a weather diary).  
 
-[Top](#overview)     
+[Top](#contents)     
 
 ## Architecture<a name = "architecture"></a>     
 ![alt text](https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Visual_Studio_2012_logo_and_wordmark.svg/2000px-Visual_Studio_2012_logo_and_wordmark.svg.png)  
-<p>This application was developed using Visual studio 2015 community edition and was written in C#</p>
+This application was developed using Visual studio 2015 community edition and was written in C#.  
 
-
-[Top](#overview)  
+[Top](#contents)  
 
 ## Sensor<a name = "Sensor"></a>  
-<P>The Sensor used in this application is the devices GPS. Without an Internet connection or GPS, this application will not work</p>
-[Top](#overview)   
+The Sensor used in this application is the devices GPS. Without an Internet connection or GPS, this application will not work.     
+
+[Top](#contents)    
 
 ## Isolated Storage<a name = "Storage"></a>  
-<p>For the isolated storage requirement I use the devices local storage to permanently store information. To use windows local storage I used:</p>  
+For the isolated storage requirement I use the devices local storage to permanently store information. To use windows local storage I used:   
 ```
-ApplicationData.Current.LocalFolder;   
+ApplicationData.Current.LocalFolder;     
 ```  
-Here the users data is saved in a file and is loaded every time the application is used.  
+Here the users data is saved in a file and is loaded every time the application is used.   
 
-[Top](#overview)   
+[Top](#contents)   
 ## ASP.net Web App<a name = "Webapp"></a>  
-[Top](#overview)  
+I created a ASP.net Web written in C# to update the start menu tile for my application every six hours with the current weather from the last known position using the devices gps. In order to do this I had to create a [Microsoft Azure Account](https://azure.microsoft.com/en-us/) and publish that web app to the cloud.   
+
+
+[Top](#contents)  
 
 ## References<a name = "References"></a>  
 * Docs  
@@ -49,6 +52,9 @@ https://developer.microsoft.com/en-us/windows/apps
 
 * Weather API Used  
 https://openweathermap.org/  
+
+* Microsoft Azure  
+https://azure.microsoft.com/en-us/  
 
 * Online Tutorials  
 https://channel9.msdn.com/Series/Windows-10-development-for-absolute-beginners
@@ -76,4 +82,4 @@ https://pixabay.com/p-1265209/?no_redirect
 https://pixabay.com/p-2031244/?no_redirect  
 * Tile Template  
 https://msdn.microsoft.com/en-us/library/windows/apps/hh761491.aspx#TileSquareText01      
-[Top](#overview)
+[Top](#contents)  
