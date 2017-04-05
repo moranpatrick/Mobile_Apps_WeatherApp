@@ -31,7 +31,7 @@
         </StackPanel>
 
         <StackPanel x:Name="_logPage">
-            <TextBox Width="220" MaxHeight="300" x:Name="_displayLog" FontFamily="Comic Sans MS" TextAlignment="Center" TextWrapping="Wrap" Visibility="Collapsed" ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnly="True">
+            <TextBox Width="220" MaxHeight="300" x:Name="_displayLog" AcceptsReturn="True" FontFamily="Comic Sans MS" TextAlignment="Center" TextWrapping="Wrap" Visibility="Collapsed" ScrollViewer.VerticalScrollBarVisibility="Auto" IsReadOnly="True">
                 <TextBox.Header>
                     <TextBlock  Text="Log Diary" TextAlignment="Center" Foreground="red" FontFamily="Comic Sans MS" FontWeight="Bold"></TextBlock>
                 </TextBox.Header>
