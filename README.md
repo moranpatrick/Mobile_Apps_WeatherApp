@@ -16,24 +16,24 @@ Project Instructions:
 and at least one other sensor or service available on the devices.   
 
 
-For this project I decided to make a weather application which uses the devices GPS to get your location. The gps coordinates are passed through a HTTP request to a [weather API](http://openweathermap.org/) and the current weather for that location is displayed to the user.</p>
-<p>The user can also save the current weather along with the date, time and an optional message (Like a weather diary).  
+For this project I decided to make a weather application which uses the devices GPS to get your location. The gps coordinates are passed through a HTTP request to a [weather API](http://openweathermap.org/) I signed up too and the current weather for that location is displayed to the user.</p>
+The user can also save the current weather along with the date, time and an optional message (Like a weather diary).  
 
 [Top](#contents)     
 
 ## Architecture<a name = "architecture"></a>     
 ![alt text](https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Visual_Studio_2012_logo_and_wordmark.svg/2000px-Visual_Studio_2012_logo_and_wordmark.svg.png)  
-This application was developed using Visual studio 2015 community edition and was written in C#.  
+This application was developed using Visual studio 2015 community edition and was written in C#, XAML.  
 
 [Top](#contents)  
 
 ## Sensor<a name = "Sensor"></a>  
-The Sensor used in this application is the devices GPS. Without an Internet connection or GPS, this application will not work.     
+For the Sensor requirement of the project I used the devices GPS. Without an Internet connection or GPS, this application will not work.     
 
 [Top](#contents)    
 
 ## Isolated Storage<a name = "Storage"></a>  
-For the isolated storage requirement I use the devices local storage to permanently store information. To use windows local storage I used:   
+For the isolated storage requirement I used the devices local storage to permanently store information. (Current Weather, date, time and User message). To use windows local storage I used:   
 ```
 ApplicationData.Current.LocalFolder;     
 ```  
@@ -41,8 +41,8 @@ Here the users data is saved in a file and is loaded every time the application 
 
 [Top](#contents)   
 ## ASP.net Web App<a name = "Webapp"></a>  
-I created a ASP.net Web written in C# to update the start menu tile for my application every six hours with the current weather from the last known position using the devices gps. In order to do this I had to create a [Microsoft Azure Account](https://azure.microsoft.com/en-us/) and publish that web app to the cloud.   
-
+![alt text](https://upload.wikimedia.org/wikipedia/commons/f/ff/Windows_Azure_logo.png)  
+Following an online tutorial I created an ASP.net Web Application written in C#. This application updates the start menu tile for the Weather Diary App, every six hours, with the current weather from it's last known position. In order to do this I had to create a [Microsoft Azure Account](https://azure.microsoft.com/en-us/) and publish that web app to the cloud. I also used a Tile Template from the microsoft [docs](https://msdn.microsoft.com/en-us/library/windows/apps/hh761491.aspx#TileSquareText01) page.
 
 [Top](#contents)  
 

@@ -34,8 +34,8 @@ namespace WeatherApp
             this.InitializeComponent();
 
         }
-
-        //Page loaded event called on start-up
+        #region Page Loaded 
+        //Page loaded event called immediately on start-up
         private async void Page_Loaded(object sender, RoutedEventArgs e)
         {
             try
@@ -45,7 +45,7 @@ namespace WeatherApp
                 var lat = position.Coordinate.Latitude;
                 var lon = position.Coordinate.Longitude;
 
-                //Call the getWeather() in GetWeatherProxy
+                //Call the getWeather() in GetWeatherProxy and pass through latitude and longitude
                 RootObject _weather = await GetWeatherProxy.getWeather(lat, lon);
 
                 //Schedule Tile Update from web app on azure passing in current longitude and latitude
@@ -58,11 +58,11 @@ namespace WeatherApp
                 var updater = TileUpdateManager.CreateTileUpdaterForApplication();
                 updater.StartPeriodicUpdate(tileContent, requestedInterval);
 
-                //Create a path with the icon from the json
+                //Create a path to the assets folder with the icon returned in the json
                 string _weatherIcon = String.Format("ms-appx:///Assets/weather/{0}.png", _weather.weather[0].icon);
                 _resultImage.Source = new BitmapImage(new Uri(_weatherIcon, UriKind.Absolute));
 
-                //Get Location Name, temperature and description       
+                //Display Location Name, temperature and description       
                 _tempTxt.Text = ((int)_weather.main.temp).ToString() + "°";
                 _descriptionTxt.Text = _weather.weather[0].description;
                 _locationTxt.Text = _weather.name;
@@ -76,7 +76,7 @@ namespace WeatherApp
             }
             catch
             {
-                //Handles errors, make retry button visible
+                //Handles errors, make retry button visible - If the GPS or Internet Fails the whole app fails as it needs both
                 _locationTxt.Text = "Oops - Unable to get weather at this time.";
                 _errorButon.Visibility = Visibility.Visible;
                 _progressRing.IsActive = false;
@@ -84,6 +84,7 @@ namespace WeatherApp
             }
 
         }
+        #endregion
 
         private void _errorButon_Click(object sender, RoutedEventArgs e)
         {
@@ -95,6 +96,7 @@ namespace WeatherApp
                
         }
 
+        #region
         private async void _logBtn_Click(object sender, RoutedEventArgs e)
         {
             _LogMessage.Visibility = Visibility.Collapsed;
@@ -107,10 +109,12 @@ namespace WeatherApp
             _home.Visibility = Visibility.Visible;
             _deleteLogBtn.Visibility = Visibility.Visible;
 
+            //Get Current Date and Time
             var date = DateTime.Now.ToString("dd/m/yy h:mm:ss");
 
             try
             {
+                //Get The Position
                 var position = await LocationManager.GetPosition();
 
                 var lat = position.Coordinate.Latitude;
@@ -130,7 +134,7 @@ namespace WeatherApp
                     logData = "Temperature: " + ((int)_weather.main.temp).ToString() + "°" + "\nLocation: " + _weather.name + "\nDate: " + date + "\nLog Message: " + _LogMessage.Text + "\n=======================\n";
                 }
 
-                /*https://blogs.windows.com/buildingapps/2016/05/10/getting-started-storing-app-data-locally/#bMwMep36lwQ3xqDD.97*/
+                /* Local Storage Reference: https://blogs.windows.com/buildingapps/2016/05/10/getting-started-storing-app-data-locally/#bMwMep36lwQ3xqDD.97*/
                 var dataFolder = ApplicationData.Current.LocalFolder;
                 var newFolder = await dataFolder.CreateFolderAsync("LogFolder", CreationCollisionOption.OpenIfExists);
 
@@ -156,14 +160,14 @@ namespace WeatherApp
             }
             catch
             {
-
                 _locationTxt.Text = "Error Logging File!";
-                //Page_Loaded(sender, e);
+                //Call the home_click event
                 _home_Click(sender, e);
                 _progressRing.IsActive = false;
             }
              
         }
+        #endregion
 
         private async void readLogFile()
         {
@@ -176,7 +180,8 @@ namespace WeatherApp
             _progressRing.IsActive = false;
             _displayLog.Text = textContent + "\n";
         }
-        /*http://stackoverflow.com/questions/8626018/how-to-check-if-file-exists-in-a-windows-store-app*/
+
+        /*Method Reference: http://stackoverflow.com/questions/8626018/how-to-check-if-file-exists-in-a-windows-store-app*/
         private async Task<bool> isFilePresent(string fileName)
         {
             var item = await ApplicationData.Current.LocalFolder.TryGetItemAsync(fileName);
@@ -185,6 +190,7 @@ namespace WeatherApp
 
         private async void _deleteLogBtn_Click(object sender, RoutedEventArgs e)
         {
+            //To clear the log, just write over it instead of appending to the file
             var dataFolder = ApplicationData.Current.LocalFolder;
             var newFolder = await dataFolder.CreateFolderAsync("LogFolder", CreationCollisionOption.OpenIfExists);
 
@@ -208,8 +214,9 @@ namespace WeatherApp
             _deleteLogBtn.Visibility = Visibility.Visible;
             _home.Visibility = Visibility.Visible;
             _displayLog.Visibility = Visibility.Visible;
-            /*Only read file if it exists - Catch file exception*/
-        var fileExists = await isFilePresent("LogFolder");
+            
+            /*Only read file if it exists - Catch file not found exception*/
+            var fileExists = await isFilePresent("LogFolder");
             if (fileExists == true)
             {
                 readLogFile();
